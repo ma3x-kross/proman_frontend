@@ -1,11 +1,22 @@
-import $api from '../http';
-import {AxiosResponse} from 'axios'
-import {AuthResponse} from '../models/response/AuthResponse';
-import {IUser} from '../models/IUser';
+import $api from '../http'
+import { AxiosResponse } from 'axios'
+import { AuthResponse } from '../models/response/AuthResponse'
+import { User } from '../interfaces/UsersInterfaces'
+
+export default class UserService {
+	static async invite(
+		email: string,
+
+		role: string,
+	): Promise<AxiosResponse<AuthResponse>> {
+		return $api.post<AuthResponse>('/users/invite', {
+			email,
+			role,
+		})
+	}
 
 
-export default class UserService{
-    static async fetchUsers(): Promise<AxiosResponse<IUser[]>>{
-        return $api.get<IUser[]>('/users')
-    }
+	static async fetchUsers(): Promise<AxiosResponse<User[]>> {
+		return $api.get<User[]>('/users')
+	}
 }
