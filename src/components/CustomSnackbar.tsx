@@ -35,7 +35,7 @@ export default function CustomSnackbar({ message }: { message: string }) {
 				Open success snackbar
 			</Button>
 			<Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
-				<Alert onClose={handleClose} severity='success' sx={{ width: '100%' }}>
+				<Alert onClose={handleClose} severity='error' sx={{ width: '100%' }}>
 					{message}
 				</Alert>
 			</Snackbar>

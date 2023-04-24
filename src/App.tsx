@@ -1,7 +1,7 @@
 import React from 'react'
 import { Context } from './index'
 import { observer } from 'mobx-react-lite'
-import LoginPage from './pages/LoginPage'
+import LoginPage from './pages/auth/LoginPage/LoginPage'
 import { Routes, Route } from 'react-router-dom'
 import HomePage from './pages/HomePage/HomePage'
 import { CircularProgress, Grid } from '@mui/material'
@@ -9,7 +9,7 @@ import Layout from './components/Layout'
 import ProjectsPage from './pages/ProjectsPage'
 import PeoplePage from './pages/PeoplePage/PeoplePage'
 import ReportsPage from './pages/ReportsPage'
-import RegistrationPage from './pages/Registration'
+import RegistrationPage from './pages/auth/RegisterPage/RegistrationPage'
 import People from './pages/PeoplePage/PeoplePage'
 
 function App() {

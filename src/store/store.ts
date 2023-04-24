@@ -45,12 +45,13 @@ export default class Store {
 			console.log(response.data.user)
 		} catch (e: any) {
 			console.log(e.response?.data?.message)
+			return false
 		}
 	}
 
 	async logout() {
 		try {
-			const response = await AuthService.logout()
+			await AuthService.logout()
 			localStorage.removeItem('token')
 			localStorage.removeItem('roles')
 			this.setAuth(false)
@@ -85,8 +86,10 @@ export default class Store {
 		try {
 			const response = await UserService.invite(email, role)
 			console.log(response)
+			return true
 		} catch (e: any) {
 			console.log(e.response?.data?.message)
+			return false
 		}
 	}
 
@@ -102,6 +105,7 @@ export default class Store {
 			this.setRoles(roles)
 		} catch (e: any) {
 			console.log(e.response?.data?.message)
+			return e.response?.data?.message
 		}
 	}
 }

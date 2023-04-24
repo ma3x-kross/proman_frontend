@@ -13,7 +13,7 @@ import { observer } from 'mobx-react-lite'
 
 import AddIcon from '@mui/icons-material/Add'
 import Modal from '../../components/Modal'
-import InviteForm from '../../components/InviteForm'
+import InviteForm from './InviteForm'
 import PeopleActions from './PeopleActions'
 
 const PeoplePage = () => {
