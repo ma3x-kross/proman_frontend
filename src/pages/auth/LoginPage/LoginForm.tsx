@@ -39,7 +39,7 @@ const LoginForm: React.FC = () => {
 
 	const [showPassword, setShowPassword] = React.useState<Boolean>(false)
 
-	const { control, handleSubmit } = useForm<ILoginForm>()
+	const { control, handleSubmit } = useForm<ILoginForm>({ mode: 'all' })
 	const { errors } = useFormState({
 		control,
 	})

@@ -8,10 +8,10 @@ interface IPeopleActions {
 	params: any
 }
 
-const PeopleActions: React.FC<IPeopleActions> = () => {
+const PeopleActions: React.FC<IPeopleActions> = ({ params }) => {
 	return (
 		<Box sx={{ m: 1, position: 'relative' }}>
-			<Link to={'/'}>
+			<Link to={`/people/${params.id}`}>
 				<Fab
 					color='primary'
 					sx={{

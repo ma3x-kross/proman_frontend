@@ -17,11 +17,6 @@ const GridHomePage = ({
 	pages: IPages
 	icons: React.ElementType[]
 }) => {
-	// const { users } = UsersStore
-
-	// React.useEffect(() => {
-	// 	UsersStore.getUsers()
-	// }, [])
 
 	return (
 		<>

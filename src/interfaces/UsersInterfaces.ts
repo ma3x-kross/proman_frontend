@@ -1,5 +1,3 @@
-
-
 export interface User {
 	id: number
 	email: string
@@ -24,4 +22,6 @@ export interface RegisterDto {
 	telegramUsername: string
 }
 
-
+export interface UpdateUserDto extends RegisterDto {
+	email: string
+}

@@ -30,7 +30,7 @@ const PeoplePage = () => {
 
 	React.useEffect(() => {
 		UsersStore.getUsers()
-	}, [])
+	}, [open])
 
 	const columns: GridColDef[] = React.useMemo(
 		() => [
@@ -108,6 +108,7 @@ const PeoplePage = () => {
 			<Box
 				sx={{
 					display: 'flex',
+					flexWrap: 'wrap',
 					alignItems: 'center',
 					justifyContent: 'space-between',
 				}}
@@ -119,12 +120,11 @@ const PeoplePage = () => {
 					<Stack direction='row' spacing={2} alignItems='center'>
 						<Typography
 							variant='h5'
-							component='h5'
 							sx={{
 								fontStyle: 'italic',
 							}}
 						>
-							пригласить нового пользователя
+							пригласить пользователя
 						</Typography>
 						<Fab
 							color='primary'

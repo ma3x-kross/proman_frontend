@@ -1,6 +1,7 @@
-import { Lock, Visibility, VisibilityOff } from '@mui/icons-material'
+import { GroupAdd, Visibility, VisibilityOff } from '@mui/icons-material'
 import {
 	Alert,
+	AlertColor,
 	AlertTitle,
 	Avatar,
 	Button,
@@ -11,14 +12,13 @@ import {
 	InputAdornment,
 	InputLabel,
 	OutlinedInput,
+	Paper,
 	Snackbar,
 	TextField,
 	Typography,
 } from '@mui/material'
 
 import React from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import { Context } from '../../../index'
 import {
 	Controller,
 	SubmitHandler,
@@ -26,57 +26,37 @@ import {
 	useFormState,
 } from 'react-hook-form'
 import {
-	passwordValidation,
-	phoneValidation,
-	requiredValidation,
-	telegramUsernameValidation,
-} from '../../../utils/validationRules'
+	updateEmailValidation,
+	updatePasswordValidation,
+	updatePhoneValidation,
+	updateTelegramLoginValidation,
+} from '../utils/validationRules'
+import { UpdateUserDto } from '../interfaces/UsersInterfaces'
+import UsersStore from '../store/users/UsersStore'
 
-interface IRegistrationForm {
-	fullName: string
-	password: string
-	phone: string
-	telegramUsername: string
+interface IAlertValue {
+	type: AlertColor
+	text: string
 }
 
-const RegistrationForm: React.FC = () => {
-	const { store } = React.useContext(Context)
-
-	const { link } = useParams()
-	const navigate = useNavigate()
-
+const EditUserForm: React.FC = () => {
 	const [showPassword, setShowPassword] = React.useState<Boolean>(false)
 
-	const { control, handleSubmit } = useForm<IRegistrationForm>({mode: 'all'})
-
+	const { control, handleSubmit } = useForm<UpdateUserDto>({ mode: 'all' })
 	const { errors } = useFormState({
 		control,
 	})
 
-	const [open, setOpen] = React.useState(false)
-	const [alertMessage, setAlertMessage] = React.useState('')
-
-	const handleClose = (
-		event?: React.SyntheticEvent | Event,
-		reason?: string,
-	) => {
-		if (reason === 'clickaway') {
-			return
+	const onSubmit: SubmitHandler<UpdateUserDto> = async (data) => {
+		for (let key in data) {
+			if (data[key as keyof UpdateUserDto] === '')
+				delete data[key as keyof UpdateUserDto]
 		}
-
-		setOpen(false)
-	}
-
-	const onSubmit: SubmitHandler<IRegistrationForm> = async (data) => {
-		const result = await store.register(data, link as string)
-		if (result) {
-			setAlertMessage(result as string)
-			setOpen(true)
-		} else navigate('/')
+		await UsersStore.updateSelf(data)
 	}
 
 	return (
-		<>
+		<Paper elevation={5} sx={{ padding: 5 }}>
 			<Grid
 				component='form'
 				container
@@ -87,39 +67,39 @@ const RegistrationForm: React.FC = () => {
 				<Grid item>
 					<Grid container direction='column' alignItems='center'>
 						<Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
-							<Lock />
+							<GroupAdd />
 						</Avatar>
 						<Typography component='h1' variant='h5'>
-							Регистрация
+							Редактировать информацию
 						</Typography>
 					</Grid>
+				</Grid>
+				<Grid item>
+					<Controller
+						control={control}
+						name='email'
+						rules={updateEmailValidation}
+						render={({ field }) => (
+							<TextField
+								value={field.value}
+								onChange={(e) => field.onChange(e)}
+								type='email'
+								fullWidth
+								label='Введите email'
+								placeholder='example@mail.ru'
+								variant='outlined'
+								error={!!errors.email?.message}
+								helperText={errors.email?.message}
+							/>
+						)}
+					/>
 				</Grid>
 
 				<Grid item>
 					<Controller
 						control={control}
-						name='fullName'
-						rules={requiredValidation}
-						render={({ field }) => (
-							<TextField
-								value={field.value}
-								onChange={(e) => field.onChange(e)}
-								type='text'
-								fullWidth
-								label='Введите ФИО'
-								placeholder='Семенов Петр Иванович'
-								variant='outlined'
-								error={!!errors.fullName?.message}
-								helperText={errors.fullName?.message}
-							/>
-						)}
-					/>
-				</Grid>
-				<Grid item>
-					<Controller
-						control={control}
 						name='password'
-						rules={passwordValidation}
+						rules={updatePasswordValidation}
 						render={({ field }) => (
 							<FormControl fullWidth>
 								<InputLabel
@@ -157,11 +137,32 @@ const RegistrationForm: React.FC = () => {
 						)}
 					/>
 				</Grid>
+
+				<Grid item>
+					<Controller
+						control={control}
+						name='fullName'
+						render={({ field }) => (
+							<TextField
+								value={field.value}
+								onChange={(e) => field.onChange(e)}
+								type='text'
+								fullWidth
+								label='Введите ФИО'
+								placeholder='Семенов Петр Иванович'
+								variant='outlined'
+								error={!!errors.fullName?.message}
+								helperText={errors.fullName?.message}
+							/>
+						)}
+					/>
+				</Grid>
+
 				<Grid item>
 					<Controller
 						control={control}
 						name='phone'
-						rules={phoneValidation}
+						rules={updatePhoneValidation}
 						render={({ field }) => (
 							<TextField
 								value={field.value}
@@ -181,7 +182,7 @@ const RegistrationForm: React.FC = () => {
 					<Controller
 						control={control}
 						name='telegramUsername'
-						rules={telegramUsernameValidation}
+						rules={updateTelegramLoginValidation}
 						render={({ field }) => (
 							<TextField
 								value={field.value}
@@ -197,19 +198,15 @@ const RegistrationForm: React.FC = () => {
 						)}
 					/>
 				</Grid>
+				<Grid item></Grid>
+
 				<Grid item>
 					<Button type='submit' fullWidth variant='contained'>
-						Подтвердить регистрацию
+						Редактировать
 					</Button>
 				</Grid>
 			</Grid>
-			<Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
-				<Alert onClose={handleClose} severity='error' sx={{ width: '100%' }}>
-					<AlertTitle>ОШИБКА</AlertTitle>
-					{alertMessage}
-				</Alert>
-			</Snackbar>
-		</>
+		</Paper>
 	)
 }
-export default RegistrationForm
+export default EditUserForm

@@ -2,8 +2,8 @@ import { Dialog } from '@mui/material'
 import React from 'react'
 
 interface IModalProps {
-	open: boolean
-	handleClose: () => void
+		open: boolean
+		handleClose: () => void
 	Component: React.ReactNode
 }
 

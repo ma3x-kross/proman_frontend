@@ -18,20 +18,17 @@ import {
 } from '@mui/material'
 
 import React from 'react'
-import { Context } from '../../index'
+import { Context } from '../index'
 import {
 	Controller,
 	SubmitHandler,
 	useForm,
 	useFormState,
 } from 'react-hook-form'
-import {
-	emailValidation,
-	requiredValidation,
-} from '../../utils/validationRules'
+import { emailValidation, requiredValidation } from '../utils/validationRules'
+import UsersStore from '../store/users/UsersStore'
 
-interface IInviteForm {
-	email: string
+interface IAddRoleForm {
 	role: string
 }
 
@@ -40,10 +37,8 @@ interface IAlertValue {
 	text: string
 }
 
-const InviteForm = () => {
-	const { store } = React.useContext(Context)
-
-	const { control, handleSubmit } = useForm<IInviteForm>({ mode: 'all' })
+const AddRoleForm = ({ userId }: { userId: number }) => {
+	const { control, handleSubmit } = useForm<IAddRoleForm>()
 	const { errors } = useFormState({
 		control,
 	})
@@ -64,17 +59,17 @@ const InviteForm = () => {
 		setOpen(false)
 	}
 
-	const onSubmit: SubmitHandler<IInviteForm> = async (data) => {
-		const result = await store.invite(data.email, data.role)
+	const onSubmit: SubmitHandler<IAddRoleForm> = async (data) => {
+		const result = await UsersStore.addRole(data.role, userId)
 		if (!result) {
 			setAlertValue({
 				type: 'error',
-				text: 'Пользователь с таким email уже существует',
+				text: 'Не удалось выдать роль пользователю',
 			})
 		} else {
 			setAlertValue({
 				type: 'success',
-				text: 'Приглашение отправлено на указанную почту',
+				text: 'Роль была успешно выдана',
 			})
 		}
 		setOpen(true)
@@ -95,29 +90,9 @@ const InviteForm = () => {
 							<GroupAdd />
 						</Avatar>
 						<Typography component='h1' variant='h5'>
-							Пригласить пользователя
+							Выдать роль пользователю
 						</Typography>
 					</Grid>
-				</Grid>
-				<Grid item>
-					<Controller
-						control={control}
-						name='email'
-						rules={emailValidation}
-						render={({ field }) => (
-							<TextField
-								value={field.value}
-								onChange={(e) => field.onChange(e)}
-								type='email'
-								fullWidth
-								label='Введите email'
-								placeholder='example@mail.ru'
-								variant='outlined'
-								error={!!errors.email?.message}
-								helperText={errors.email?.message}
-							/>
-						)}
-					/>
 				</Grid>
 
 				<Grid item>
@@ -157,8 +132,8 @@ const InviteForm = () => {
 				</Grid>
 
 				<Grid item>
-					<Button type='submit' fullWidth variant='contained'>
-						Пригласить пользователя
+					<Button  type='submit' fullWidth variant='contained'>
+						Выдать роль
 					</Button>
 				</Grid>
 			</Grid>
@@ -177,4 +152,4 @@ const InviteForm = () => {
 		</Paper>
 	)
 }
-export default InviteForm
+export default AddRoleForm

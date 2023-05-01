@@ -76,6 +76,7 @@ function Header() {
 		const target = event.target as HTMLElement
 		if (target !== null) {
 			const text = target.innerText
+			if (text === settings[0]) navigate('/profile')
 			if (text === settings[1]) {
 				store.logout()
 				navigate('/')
@@ -169,8 +170,6 @@ function Header() {
 					<Typography
 						variant='h5'
 						noWrap
-						component='a'
-						href=''
 						sx={{
 							mr: 2,
 							display: { xs: 'flex', md: 'none' },
@@ -182,7 +181,9 @@ function Header() {
 							textDecoration: 'none',
 						}}
 					>
-						PROMAN
+						<Link to='/' style={{ textDecoration: 'none', color: 'inherit' }}>
+							PROMAN
+						</Link>
 					</Typography>
 					<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
 						{Object.entries(pages).map(([key, value]) => (
@@ -206,7 +207,7 @@ function Header() {
 					</Box>
 
 					<Box sx={{ flexGrow: 0 }}>
-						<Tooltip title='Open settings'>
+						<Tooltip title='Открыть настройки'>
 							<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
 								<Avatar />
 							</IconButton>
