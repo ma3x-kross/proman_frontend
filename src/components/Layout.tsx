@@ -14,7 +14,7 @@ function Layout() {
 
 			<Divider sx={{ mt: '30px' }} />
 
-			{/* <Footer /> */}
+			<Footer />
 		</>
 	)
 }

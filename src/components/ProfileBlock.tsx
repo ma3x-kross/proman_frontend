@@ -19,7 +19,7 @@ import ModalDelete from './ModalDelete'
 import { Context } from '..'
 import { useLocation, useNavigate } from 'react-router-dom'
 import UsersStore from '../store/users/UsersStore'
-import { stringAvatar } from '../utils/stringAvatar'
+import { stringAvatar, trimFullName } from '../utils/stringAvatar'
 import EditUserForm from './EditUserForm'
 import AddRoleForm from './AddRoleForm'
 
@@ -43,7 +43,6 @@ const ProfileBlock: React.FC<IProfileBlockProps> = ({
 	const { store } = React.useContext(Context)
 	const location = useLocation()
 	const isProfile = location.pathname === '/profile' ? true : false
-	console.log(isProfile)
 	const navigate = useNavigate()
 
 	const [openEdit, setOpenEdit] = React.useState(false)
@@ -80,10 +79,14 @@ const ProfileBlock: React.FC<IProfileBlockProps> = ({
 							gap: '15px',
 						}}
 					>
-						<Avatar {...stringAvatar(fullName as string)} />
-						<Typography variant='h6' component='h6'>
-							{fullName}
-						</Typography>
+						{fullName && (
+							<>
+								<Avatar {...stringAvatar(trimFullName(fullName))} />
+								<Typography variant='h6' component='h6'>
+									{fullName}
+								</Typography>
+							</>
+						)}
 					</CardContent>
 				</Card>
 

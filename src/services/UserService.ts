@@ -15,8 +15,8 @@ export default class UserService {
 		})
 	}
 
-	static async fetchUsers(): Promise<AxiosResponse<User[]>> {
-		return $api.get<User[]>('/users')
+	static async fetchUsers(role?: string): Promise<AxiosResponse<User[]>> {
+		return $api.get<User[]>(`/users${role ? `?role=${role}` : ''}`)
 	}
 
 	static async fetchOneUser(id: number): Promise<AxiosResponse<User>> {

@@ -2,18 +2,25 @@ import React from 'react'
 import { Context } from './index'
 import { observer } from 'mobx-react-lite'
 import LoginPage from './pages/auth/LoginPage/LoginPage'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import HomePage from './pages/HomePage/HomePage'
 import { CircularProgress, Grid } from '@mui/material'
 import Layout from './components/Layout'
-import ProjectsPage from './pages/ProjectsPage'
+import ProjectsPage from './pages/ProjectPage/ProjectsPage'
 import PeoplePage from './pages/PeoplePage/PeoplePage'
 import ReportsPage from './pages/ReportsPage'
 import RegistrationPage from './pages/auth/RegisterPage/RegistrationPage'
-import People from './pages/PeoplePage/PeoplePage'
+import ProfilePage from './pages/ProfilePage/ProfilePage'
+import PeopleInfoPage from './pages/PeopleInfoPage/PeopleInfoPage'
+import ProjectInfoPage from './pages/ProjectInfoPage/ProjectInfoPage'
 
 function App() {
 	const { store } = React.useContext(Context)
+
+	const allowAdminAndManager =
+		localStorage.getItem('roles')?.includes('ADMIN') ||
+		localStorage.getItem('roles')?.includes('MANAGER')
+	const allowOnlyAdmin = localStorage.getItem('roles')?.includes('ADMIN')
 
 	// const [users, setUsers] = React.useState<IUser[]>([])
 
@@ -22,15 +29,6 @@ function App() {
 			store.checkAuth()
 		}
 	}, [])
-
-	// async function getUsers(){
-	//     try {
-	//         const response = await UserService.fetchUsers()
-	//         setUsers(response.data)
-	//     }catch (e) {
-	//         console.log(e)
-	//     }
-	// }
 
 	if (store.loading) {
 		return (
@@ -58,10 +56,44 @@ function App() {
 			<Routes>
 				<Route path='/' element={<Layout />}>
 					<Route index element=<HomePage /> />
-					<Route path='projects' element=<ProjectsPage /> />
-					<Route path='people' element=<PeoplePage /> />
-
-					<Route path='reports' element=<ReportsPage /> />
+					<Route
+						path='projects'
+						element={
+							allowAdminAndManager ? (
+								<ProjectsPage />
+							) : (
+								<Navigate to='/' replace />
+							)
+						}
+					/>
+					<Route path='projects/:id' element=<ProjectInfoPage/>/>
+					<Route
+						path='people'
+						element={
+							allowAdminAndManager ? (
+								<PeoplePage />
+							) : (
+								<Navigate to='/' replace />
+							)
+						}
+					/>
+					<Route
+						path='people/:id'
+						element={
+							allowAdminAndManager ? (
+								<PeopleInfoPage />
+							) : (
+								<Navigate to='/' replace />
+							)
+						}
+					/>
+					<Route
+						path='reports'
+						element={
+							allowOnlyAdmin ? <ReportsPage /> : <Navigate to='/' replace />
+						}
+					/>
+					<Route path='profile' element=<ProfilePage /> />
 				</Route>
 			</Routes>
 		</div>

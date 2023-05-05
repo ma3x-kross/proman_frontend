@@ -1,8 +1,5 @@
 import { GroupAdd, Visibility, VisibilityOff } from '@mui/icons-material'
 import {
-	Alert,
-	AlertColor,
-	AlertTitle,
 	Avatar,
 	Button,
 	FormControl,
@@ -13,7 +10,6 @@ import {
 	InputLabel,
 	OutlinedInput,
 	Paper,
-	Snackbar,
 	TextField,
 	Typography,
 } from '@mui/material'
@@ -33,11 +29,6 @@ import {
 } from '../utils/validationRules'
 import { UpdateUserDto } from '../interfaces/UsersInterfaces'
 import UsersStore from '../store/users/UsersStore'
-
-interface IAlertValue {
-	type: AlertColor
-	text: string
-}
 
 const EditUserForm: React.FC = () => {
 	const [showPassword, setShowPassword] = React.useState<Boolean>(false)
@@ -66,9 +57,6 @@ const EditUserForm: React.FC = () => {
 			>
 				<Grid item>
 					<Grid container direction='column' alignItems='center'>
-						<Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
-							<GroupAdd />
-						</Avatar>
 						<Typography component='h1' variant='h5'>
 							Редактировать информацию
 						</Typography>
@@ -81,6 +69,7 @@ const EditUserForm: React.FC = () => {
 						rules={updateEmailValidation}
 						render={({ field }) => (
 							<TextField
+								size='small'
 								value={field.value}
 								onChange={(e) => field.onChange(e)}
 								type='email'
@@ -101,7 +90,7 @@ const EditUserForm: React.FC = () => {
 						name='password'
 						rules={updatePasswordValidation}
 						render={({ field }) => (
-							<FormControl fullWidth>
+							<FormControl fullWidth size='small'>
 								<InputLabel
 									htmlFor='outlined-adornment-password'
 									error={!!errors.password?.message}
@@ -109,6 +98,7 @@ const EditUserForm: React.FC = () => {
 									Придумайте пароль
 								</InputLabel>
 								<OutlinedInput
+									size='small'
 									value={field.value}
 									onChange={(e) => field.onChange(e)}
 									id='outlined-adornment-password'
@@ -144,6 +134,7 @@ const EditUserForm: React.FC = () => {
 						name='fullName'
 						render={({ field }) => (
 							<TextField
+								size='small'
 								value={field.value}
 								onChange={(e) => field.onChange(e)}
 								type='text'
@@ -165,6 +156,7 @@ const EditUserForm: React.FC = () => {
 						rules={updatePhoneValidation}
 						render={({ field }) => (
 							<TextField
+								size='small'
 								value={field.value}
 								onChange={(e) => field.onChange(e)}
 								type='text'
@@ -185,6 +177,7 @@ const EditUserForm: React.FC = () => {
 						rules={updateTelegramLoginValidation}
 						render={({ field }) => (
 							<TextField
+								size='small'
 								value={field.value}
 								onChange={(e) => field.onChange(e)}
 								type='text'
@@ -201,7 +194,7 @@ const EditUserForm: React.FC = () => {
 				<Grid item></Grid>
 
 				<Grid item>
-					<Button type='submit' fullWidth variant='contained'>
+					<Button size='small' type='submit' fullWidth variant='contained'>
 						Редактировать
 					</Button>
 				</Grid>

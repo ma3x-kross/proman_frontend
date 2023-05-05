@@ -12,9 +12,10 @@ import {
 
 import { observer } from 'mobx-react-lite'
 import ProfileBlock from '../../components/ProfileBlock'
+import MyProjects from '../../components/MyProjects'
 
 const ProfilePage: React.FC = () => {
-	const { user } = UsersStore
+	const { user, userProjects } = UsersStore
 
 	React.useEffect(() => {
 		const getUser = async () => {
@@ -33,62 +34,19 @@ const ProfilePage: React.FC = () => {
 		)
 
 	return (
-		<>
-			<Typography variant='h4' component='h4' sx={{ m: 3 }}>
-				Личный кабинет
-			</Typography>
-			<Container sx={{ display: 'flex', flexWrap: 'wrap', gap: '30px' }}>
-				{user && (
-					<ProfileBlock
-						id={user.id}
-						fullName={user.fullName}
-						email={user.email}
-						role={user.role}
-						phone={user.phone}
-						telegramUsername={user.telegramUsername}
-					/>
-				)}
-				<Stack spacing={5}>
-					<Card>
-						<CardContent>
-							<Typography variant='h5' component='h5'>
-								Проекты в работе
-							</Typography>
-							<Typography>
-								Мобильное приложение «Менеджер по продажам»
-							</Typography>
-							<Typography>
-								Мобильное приложение «Менеджер по продажам»
-							</Typography>
-							<Typography>
-								Мобильное приложение «Менеджер по продажам»
-							</Typography>
-							<Typography>
-								Мобильное приложение «Менеджер по продажам»
-							</Typography>
-							<Typography>
-								Мобильное приложение «Менеджер по продажам»
-							</Typography>
-							<Typography>
-								Мобильное приложение «Менеджер по продажам»
-							</Typography>
-							<Typography>
-								Мобильное приложение «Менеджер по продажам»
-							</Typography>
-							<Typography>
-								Мобильное приложение «Менеджер по продажам»
-							</Typography>
-							<Typography>
-								Мобильное приложение «Менеджер по продажам»
-							</Typography>
-							<Typography>
-								Мобильное приложение «Менеджер по продажам»
-							</Typography>
-						</CardContent>
-					</Card>
-				</Stack>
-			</Container>
-		</>
+		<Container sx={{ mt: 5, display: 'flex', flexWrap: 'wrap', gap: '30px' }}>
+			{user && (
+				<ProfileBlock
+					id={user.id}
+					fullName={user.fullName}
+					email={user.email}
+					role={user.role}
+					phone={user.phone}
+					telegramUsername={user.telegramUsername}
+				/>
+			)}
+			<MyProjects projects={userProjects} />
+		</Container>
 	)
 }
 

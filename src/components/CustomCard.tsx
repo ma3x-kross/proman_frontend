@@ -57,7 +57,6 @@ function CustomCard({
 					<Box
 						sx={{
 							display: 'flex',
-							// alignItems: 'center',
 							justifyContent: 'center',
 						}}
 					>

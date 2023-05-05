@@ -105,7 +105,7 @@ const InviteForm = () => {
 						name='email'
 						rules={emailValidation}
 						render={({ field }) => (
-							<TextField
+							<TextField size='small'
 								value={field.value}
 								onChange={(e) => field.onChange(e)}
 								type='email'
@@ -126,7 +126,7 @@ const InviteForm = () => {
 						name='role'
 						rules={requiredValidation}
 						render={({ field }) => (
-							<FormControl fullWidth>
+							<FormControl fullWidth size='small'>
 								<InputLabel
 									id='role-select-label'
 									error={!!errors.role?.message}
@@ -134,6 +134,7 @@ const InviteForm = () => {
 									Роль
 								</InputLabel>
 								<Select
+									size='small'
 									labelId='role-select-label'
 									id='role-select-label'
 									defaultValue=''
@@ -157,7 +158,7 @@ const InviteForm = () => {
 				</Grid>
 
 				<Grid item>
-					<Button type='submit' fullWidth variant='contained'>
+					<Button size='small' type='submit' fullWidth variant='contained'>
 						Пригласить пользователя
 					</Button>
 				</Grid>

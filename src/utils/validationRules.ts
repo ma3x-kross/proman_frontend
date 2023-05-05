@@ -29,6 +29,18 @@ export const phoneValidation = {
 	},
 }
 
+export const numberValidation = {
+	validate: (value: number | undefined) => {
+		if (value === undefined || value === null) {
+			return true
+		}
+		if (value.toString().match(/^\d+$/)) {
+			return true
+		}
+		return 'Только положительные значения'
+	},
+}
+
 export const telegramUsernameValidation = {
 	required: REQUIRED_FIELD,
 	validate: (value: string) => {

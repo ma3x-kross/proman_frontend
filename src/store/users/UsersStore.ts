@@ -1,8 +1,9 @@
 import { makeAutoObservable } from 'mobx'
 import UserService from '../../services/UserService'
 import { UpdateUserDto, User } from '../../interfaces/UsersInterfaces'
+import { Project } from '../../interfaces/ProjectsInterfaces'
 
-interface IUsers {
+export interface IUsers {
 	id: number
 	email: string
 	fullName: string
@@ -15,6 +16,7 @@ class UsersStore {
 	user: IUsers = {} as IUsers
 	users: IUsers[] = []
 	loading: boolean = false
+	userProjects: Project[] = []
 
 	constructor() {
 		makeAutoObservable(this)
@@ -36,6 +38,10 @@ class UsersStore {
 		}))
 	}
 
+	setMyProjects(projects: Project[]) {
+		this.userProjects = projects
+	}
+
 	setUser(user: User) {
 		this.user = {
 			id: user.id,
@@ -50,17 +56,21 @@ class UsersStore {
 			phone: user.profile?.phone,
 			telegramUsername: user.profile?.telegramUsername,
 		}
+		this.user.role === 'разработчик'
+			? (this.userProjects = user.developersProjects)
+			: (this.userProjects = user.projects)
 	}
 
 	setLoading(bool: boolean) {
 		this.loading = bool
 	}
 
-	async getUsers() {
+	async getUsers(role?: string) {
 		try {
 			this.setLoading(true)
-			const response = await UserService.fetchUsers()
+			const response = await UserService.fetchUsers(role)
 			this.setUsers(response.data)
+			console.log(response)
 		} catch (e) {
 			console.log(e)
 		} finally {
@@ -75,6 +85,7 @@ class UsersStore {
 			if (id) response = await UserService.fetchOneUser(id)
 			else response = await UserService.fetchSelf()
 			this.setUser(response.data)
+			console.log(response.data)
 		} catch (e) {
 			console.log(e)
 		} finally {

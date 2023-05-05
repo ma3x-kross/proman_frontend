@@ -86,9 +86,6 @@ const AddRoleForm = ({ userId }: { userId: number }) => {
 			>
 				<Grid item>
 					<Grid container direction='column' alignItems='center'>
-						<Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
-							<GroupAdd />
-						</Avatar>
 						<Typography component='h1' variant='h5'>
 							Выдать роль пользователю
 						</Typography>
@@ -101,7 +98,7 @@ const AddRoleForm = ({ userId }: { userId: number }) => {
 						name='role'
 						rules={requiredValidation}
 						render={({ field }) => (
-							<FormControl fullWidth>
+							<FormControl fullWidth size='small'>
 								<InputLabel
 									id='role-select-label'
 									error={!!errors.role?.message}
@@ -109,6 +106,7 @@ const AddRoleForm = ({ userId }: { userId: number }) => {
 									Роль
 								</InputLabel>
 								<Select
+									size='small'
 									labelId='role-select-label'
 									id='role-select-label'
 									defaultValue=''
@@ -132,7 +130,7 @@ const AddRoleForm = ({ userId }: { userId: number }) => {
 				</Grid>
 
 				<Grid item>
-					<Button  type='submit' fullWidth variant='contained'>
+					<Button size='small' type='submit' fullWidth variant='contained'>
 						Выдать роль
 					</Button>
 				</Grid>

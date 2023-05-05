@@ -6,23 +6,27 @@ import Store from './store/store'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { Container, CssBaseline } from '@mui/material'
 import { dark } from '@mui/material/styles/createPalette'
+import { ruRU } from '@mui/material/locale'
 
-const theme = createTheme({
-	palette: {
-		primary: {
-			light: '#714BDD',
-			main: '#5B3DB3',
-			dark: '#462E88',
-			contrastText: '#fff',
-		},
-		info: {
-			main: '#fff',
-		},
-		background: {
-			default: '#fbfbfb',
+const theme = createTheme(
+	{
+		palette: {
+			primary: {
+				light: '#714BDD',
+				main: '#5B3DB3',
+				dark: '#462E88',
+				contrastText: '#fff',
+			},
+			info: {
+				main: '#fff',
+			},
+			background: {
+				default: '#fbfbfb',
+			},
 		},
 	},
-})
+	ruRU,
+)
 
 interface State {
 	store: Store
