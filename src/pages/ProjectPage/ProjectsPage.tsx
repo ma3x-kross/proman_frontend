@@ -1,17 +1,9 @@
 import React from 'react'
 import ProjectStore from '../../store/projects/ProjectStore'
 import { observer } from 'mobx-react-lite'
-import {
-	DataGrid,
-	GridColDef,
-	GridRenderCellParams,
-	GridValueGetterParams,
-	gridClasses,
-} from '@mui/x-data-grid'
-import { Box, Fab, Stack, Typography } from '@mui/material'
-import { grey } from '@mui/material/colors'
-import { Project } from '../../interfaces/ProjectsInterfaces'
-import ProjectActions from './ProjectActions'
+
+import { Box, Button, Fab, Stack, Typography } from '@mui/material'
+
 import Modal from '../../components/Modal'
 import AddIcon from '@mui/icons-material/Add'
 import CreateProjectForm from './CreateProjectForm'
@@ -54,21 +46,13 @@ function ProjectsPage() {
 				</Typography>
 
 				<Stack direction='row' spacing={2} alignItems='center'>
-					<Typography
-						variant='h5'
-						sx={{
-							fontStyle: 'italic',
-						}}
-					>
-						создать новый проект
-					</Typography>
-					<Fab
+					<Button
 						color='primary'
-						aria-label='add'
 						onClick={handleClickCreateNewProject}
+						sx={{ mt: 2 }}
 					>
-						<AddIcon />
-					</Fab>
+						Создать новый проект
+					</Button>
 					<Modal
 						open={open}
 						handleClose={handleCloseModal}

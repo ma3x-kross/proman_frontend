@@ -1,3 +1,5 @@
+import dayjs from 'dayjs'
+
 const REQUIRED_FIELD = 'Обязательно для заполнения'
 
 export const emailValidation = {
@@ -91,4 +93,23 @@ export const updateTelegramLoginValidation = {
 			/^[a-zA-Z0-9_]{5,32}$/,
 			'Некорректный telegram логин',
 		),
+}
+
+export const hourValidation = {
+	required: REQUIRED_FIELD,
+	validate: (value: number) => {
+		if (value >= 1 && value <= 12) return true
+		return ' Введите число от 1 до 12'
+	},
+}
+
+export const hoursDateValidation = {
+	required: REQUIRED_FIELD,
+	validate: (value: string) => {
+		const selectedDate = dayjs(value)
+		const currentDate = dayjs()
+		if (selectedDate.isAfter(currentDate)) {
+			return 'Не может быть больше сегодняшней даты'
+		}
+	},
 }

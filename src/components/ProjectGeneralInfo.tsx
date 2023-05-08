@@ -28,6 +28,12 @@ interface IGenInfo {
 const ProjectGeneralInfo: React.FC<IProjectGeneralInfoProps> = ({
 	project,
 }) => {
+
+const access =
+	localStorage.getItem('roles')?.includes('ADMIN') ||
+	localStorage.getItem('roles')?.includes('MANAGER')
+
+
 	const navigate = useNavigate()
 
 	const [openEdit, setOpenEdit] = React.useState(false)
@@ -82,14 +88,16 @@ const ProjectGeneralInfo: React.FC<IProjectGeneralInfoProps> = ({
 				>
 					Общая информация
 				</Typography>
-				<Box>
-					<IconButton size='small' onClick={() => setOpenEdit(true)}>
-						<EditIcon color='warning' />
-					</IconButton>
-					<IconButton size='small' onClick={() => setOpenDelete(true)}>
-						<DeleteIcon color='error' />
-					</IconButton>
-				</Box>
+				{access && (
+						<Box>
+							<IconButton size='small' onClick={() => setOpenEdit(true)}>
+								<EditIcon color='warning' />
+							</IconButton>
+							<IconButton size='small' onClick={() => setOpenDelete(true)}>
+								<DeleteIcon color='error' />
+							</IconButton>
+						</Box>
+					)}
 			</Box>
 
 			<Divider sx={{ mt: '5px', mb: '10px' }} />

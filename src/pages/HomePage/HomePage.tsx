@@ -6,6 +6,7 @@ import GridHomePage from './GridHomePage'
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted'
 import RecentActorsIcon from '@mui/icons-material/RecentActors'
 import CurrencyRubleIcon from '@mui/icons-material/CurrencyRuble'
+import DevelopersHomePage from '../DevelopersHomePage/DevelopersHomePage'
 
 const icons = [FormatListBulletedIcon, RecentActorsIcon, CurrencyRubleIcon]
 
@@ -44,7 +45,7 @@ const HomePage = () => {
 			/>
 		)
 
-	return <div></div>
+	return <DevelopersHomePage />
 }
 
 export default HomePage

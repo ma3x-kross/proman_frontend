@@ -1,9 +1,9 @@
-import { GroupAdd } from '@mui/icons-material'
+
 import {
 	Alert,
 	AlertColor,
 	AlertTitle,
-	Avatar,
+	
 	Button,
 	FormControl,
 	FormHelperText,
@@ -12,14 +12,9 @@ import {
 	MenuItem,
 	Paper,
 	Select,
-	SelectChangeEvent,
 	Snackbar,
 	TextField,
 	Typography,
-	useTheme,
-	Theme,
-	Checkbox,
-	ListItemText,
 	Box,
 	Chip,
 } from '@mui/material'
@@ -283,7 +278,7 @@ const CreateProjectForm: React.FC = () => {
 									<InputLabel
 										size='small'
 										id='manager-select-label'
-										error={!!errors.status?.message}
+										error={!!errors.managerId?.message}
 									>
 										Менеджер
 									</InputLabel>
@@ -323,7 +318,7 @@ const CreateProjectForm: React.FC = () => {
 									<InputLabel
 										size='small'
 										id='developer-select-label'
-										error={!!errors.status?.message}
+										error={!!errors.developersIds?.message}
 									>
 										Разработчики
 									</InputLabel>

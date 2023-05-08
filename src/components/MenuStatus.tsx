@@ -1,7 +1,11 @@
 import * as React from 'react'
 import MenuItem from '@mui/material/MenuItem'
 import Menu from '@mui/material/Menu'
-import { PROJECT_STATUSES, Project, UpdateProjectDto } from '../interfaces/ProjectsInterfaces'
+import {
+	PROJECT_STATUSES,
+	Project,
+	UpdateProjectDto,
+} from '../interfaces/ProjectsInterfaces'
 import {
 	Alert,
 	AlertTitle,
@@ -15,16 +19,19 @@ import ProjectStore from '../store/projects/ProjectStore'
 import { useParams } from 'react-router-dom'
 
 interface IMenuStatusProps {
-	status: string,
+	status: string
 	projectId: number
 }
 
-const MenuStatus: React.FC<IMenuStatusProps> = ({ status, projectId}) => {
+const MenuStatus: React.FC<IMenuStatusProps> = ({ status, projectId }) => {
+	const access =
+		localStorage.getItem('roles')?.includes('ADMIN') ||
+		localStorage.getItem('roles')?.includes('MANAGER')
+
 	const initialIndex = PROJECT_STATUSES.findIndex((el) => el === status)
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 	const [selectedIndex, setSelectedIndex] = React.useState(initialIndex)
 	const open = Boolean(anchorEl)
-
 
 	const handleClickListItem = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget)
@@ -72,9 +79,11 @@ const MenuStatus: React.FC<IMenuStatusProps> = ({ status, projectId}) => {
 				alignItems='center'
 			>
 				{PROJECT_STATUSES[selectedIndex]}
-				<IconButton size='small' onClick={handleClickListItem}>
-					<ExpandMoreIcon />
-				</IconButton>
+				{access && (
+					<IconButton size='small' onClick={handleClickListItem}>
+						<ExpandMoreIcon />
+					</IconButton>
+				)}
 			</Typography>
 
 			<Menu

@@ -15,6 +15,10 @@ const ProjectBadge: React.FC<IProjectBadgeProps> = ({
 	subproject,
 	projectId,
 }) => {
+	const access =
+		localStorage.getItem('roles')?.includes('ADMIN') ||
+		localStorage.getItem('roles')?.includes('MANAGER')
+
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 	const open = Boolean(anchorEl)
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -38,29 +42,36 @@ const ProjectBadge: React.FC<IProjectBadgeProps> = ({
 			<Box>
 				<Typography
 					onClick={handleClick}
-					sx={{ cursor: 'pointer', fontSize: 18, width: '150px' }}
+					sx={{
+						cursor: `${access ? 'pointer' : 'auto'}`,
+						fontSize: 18,
+						width: '150px',
+					}}
 				>
 					{subproject.name}
 				</Typography>
-				<Menu
-					id='basic-menu'
-					anchorEl={anchorEl}
-					open={open}
-					onClose={handleClose}
-					MenuListProps={{
-						'aria-labelledby': 'basic-button',
-					}}
-				>
-					<MenuItem onClick={handleClose}>
-						<Link
-							to={`/projects/${subproject.id}`}
-							style={{ textDecoration: 'none', color: 'inherit' }}
+
+				{(access)&& (
+						<Menu
+							id='basic-menu'
+							anchorEl={anchorEl}
+							open={open}
+							onClose={handleClose}
+							MenuListProps={{
+								'aria-labelledby': 'basic-button',
+							}}
 						>
-							Перейти к проекту
-						</Link>
-					</MenuItem>
-					<MenuItem onClick={deleteProject}>Удалить подпроект</MenuItem>
-				</Menu>
+							<MenuItem onClick={handleClose}>
+								<Link
+									to={`/projects/${subproject.id}`}
+									style={{ textDecoration: 'none', color: 'inherit' }}
+								>
+									Перейти к проекту
+								</Link>
+							</MenuItem>
+							<MenuItem onClick={deleteProject}>Удалить подпроект</MenuItem>
+						</Menu>
+					)}
 			</Box>
 		</Grid>
 	)

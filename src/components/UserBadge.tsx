@@ -13,6 +13,13 @@ interface IUserBadgeProps {
 }
 
 const UserBadge: React.FC<IUserBadgeProps> = ({ user, role, projectId }) => {
+
+	const access =
+		localStorage.getItem('roles')?.includes('ADMIN') ||
+		localStorage.getItem('roles')?.includes('MANAGER')
+
+
+
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 	const open = Boolean(anchorEl)
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -35,36 +42,42 @@ const UserBadge: React.FC<IUserBadgeProps> = ({ user, role, projectId }) => {
 				<Box>
 					<Typography
 						onClick={handleClick}
-						sx={{ cursor: 'pointer', fontSize: 18, width: '150px' }}
+						sx={{
+							cursor: `${access ? 'pointer' : 'auto'}`,
+							fontSize: 18,
+							width: '150px',
+						}}
 					>
 						{trimFullName(user.profile.fullName)}
 					</Typography>
 					<Typography sx={{ fontSize: 14 }} color='text.secondary'>
 						{role}
 					</Typography>
-					<Menu
-						id='basic-menu'
-						anchorEl={anchorEl}
-						open={open}
-						onClose={handleClose}
-						MenuListProps={{
-							'aria-labelledby': 'basic-button',
-						}}
-					>
-						<MenuItem onClick={handleClose}>
-							<Link
-								to={`/people/${user.id}`}
-								style={{ textDecoration: 'none', color: 'inherit' }}
-							>
-								Перейти в профиль
-							</Link>
-						</MenuItem>
-						<MenuItem onClick={deleteUser}>Удалить из проекта</MenuItem>
-					</Menu>
+					{access && (
+						<Menu
+							id='basic-menu'
+							anchorEl={anchorEl}
+							open={open}
+							onClose={handleClose}
+							MenuListProps={{
+								'aria-labelledby': 'basic-button',
+							}}
+						>
+							<MenuItem onClick={handleClose}>
+								<Link
+									to={`/people/${user.id}`}
+									style={{ textDecoration: 'none', color: 'inherit' }}
+								>
+									Перейти в профиль
+								</Link>
+							</MenuItem>
+							<MenuItem onClick={deleteUser}>Удалить из проекта</MenuItem>
+						</Menu>
+					)}
 				</Box>
 			</Grid>
 		)
 	)
 }
 
-export default observer( UserBadge)
+export default observer(UserBadge)

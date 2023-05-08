@@ -19,10 +19,12 @@ import ProjectBadge from '../../components/ProjectBadge'
 import ProjectGeneralInfo from '../../components/ProjectGeneralInfo'
 
 const ProjectInfoPage = () => {
+	const access =
+		localStorage.getItem('roles')?.includes('ADMIN') ||
+		localStorage.getItem('roles')?.includes('MANAGER')
+
 	const { project } = ProjectStore
 	const { id } = useParams()
-
-	
 
 	React.useEffect(() => {
 		const getProject = async (id: number) => {
@@ -65,15 +67,17 @@ const ProjectInfoPage = () => {
 					{project.id && (
 						<>
 							<Paper sx={{ borderRadius: '20px' }}>
-								<Typography variant='h5' component='h5' sx={{ m: 3, mb: 2 }}>
+								<Typography variant='h5' component='h5' sx={{ m: 3 }}>
 									Участники проекта
 								</Typography>
 								<Grid container spacing={5} p={4} pt={0}>
-									<AddUserToProject
-										includedManager={project.manager}
-										includedDevelopers={project.developers}
-										projectId={parseInt(id as string)}
-									/>
+									{access && (
+										<AddUserToProject
+											includedManager={project.manager}
+											includedDevelopers={project.developers}
+											projectId={parseInt(id as string)}
+										/>
+									)}
 
 									{project.manager && (
 										<UserBadge
@@ -95,14 +99,16 @@ const ProjectInfoPage = () => {
 							</Paper>
 
 							<Paper sx={{ borderRadius: '20px' }}>
-								<Typography variant='h5' component='h5' sx={{ m: 3, mb: 2 }}>
+								<Typography variant='h5' component='h5' sx={{ m: 3 }}>
 									Подпроекты
 								</Typography>
 								<Grid container spacing={5} p={4} pt={0}>
-									<AddSubproject
-										includedSubprojects={project.relatedProjects}
-										projectId={parseInt(id as string)}
-									/>
+									{access && (
+										<AddSubproject
+											includedSubprojects={project.relatedProjects}
+											projectId={parseInt(id as string)}
+										/>
+									)}
 
 									{project.relatedProjects.map((project) => (
 										<ProjectBadge

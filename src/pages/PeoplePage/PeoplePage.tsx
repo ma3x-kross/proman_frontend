@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Fab, Stack, Typography } from '@mui/material'
+import { Box, Button, Fab, Stack, Typography } from '@mui/material'
 import {
 	DataGrid,
 	GridColDef,
@@ -118,21 +118,11 @@ const PeoplePage = () => {
 				</Typography>
 				{localStorage.getItem('roles')?.includes('ADMIN') && (
 					<Stack direction='row' spacing={2} alignItems='center'>
-						<Typography
-							variant='h5'
-							sx={{
-								fontStyle: 'italic',
-							}}
-						>
-							пригласить пользователя
-						</Typography>
-						<Fab
-							color='primary'
-							aria-label='add'
-							onClick={handleClickInviteNewUser}
-						>
-							<AddIcon />
-						</Fab>
+						
+						<Button color='primary' onClick={handleClickInviteNewUser} sx={{mt: 2}}>
+							Пригласить пользователя
+						</Button>
+						
 						<Modal
 							open={open}
 							handleClose={handleCloseModal}
