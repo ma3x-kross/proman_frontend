@@ -10,6 +10,17 @@ export const emailValidation = {
 	},
 }
 
+export const fullNameValidation = {
+	required: REQUIRED_FIELD,
+	validate: (value: string) => {
+		return /^([А-ЯЁA-Z][а-яёa-z]+\s){2}[А-ЯЁA-Z][а-яёa-z]+$/.test(value)
+			? true
+			: 'Введите полное ФИО'
+		// if (value.match(/^[\p{L}]+\s[\p{L}]+\s[\p{L}]+$/)) return true
+		// return 'Введите полное ФИО'
+	},
+}
+
 export const passwordValidation = {
 	required: REQUIRED_FIELD,
 	validate: (value: string) => {
@@ -28,6 +39,16 @@ export const phoneValidation = {
 	validate: (value: string) => {
 		if (value.match(/^\+?(\d){1,13}$/g)) return true
 		return 'Некорректный номер телефона'
+	},
+}
+
+export const requiredNumberValidation = {
+	required: REQUIRED_FIELD,
+	validate: (value: number) => {
+		if (value.toString().match(/^\d+$/)) {
+			return true
+		}
+		return 'Только положительные значения'
 	},
 }
 

@@ -96,7 +96,7 @@ const AddHour: React.FC<IAddHourProps> = ({ projects }) => {
 		return (
 			<Paper elevation={5} sx={{ padding: 5 }}>
 				<Typography component='h1' variant='h5'>
-					Вас еще не назначил не в один из проектов
+					Вас еще не назначил ни в один из проектов
 				</Typography>
 			</Paper>
 		)

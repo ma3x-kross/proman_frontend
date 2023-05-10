@@ -8,12 +8,15 @@ import {
 	Card,
 	CardActions,
 	CardContent,
+	IconButton,
 	Typography,
 } from '@mui/material'
 import BadgeIcon from '@mui/icons-material/Badge'
 import EmailIcon from '@mui/icons-material/Email'
 import PhoneIcon from '@mui/icons-material/Phone'
 import TelegramIcon from '@mui/icons-material/Telegram'
+import CurrencyRubleIcon from '@mui/icons-material/CurrencyRuble'
+import EditIcon from '@mui/icons-material/Edit'
 import Modal from './Modal'
 import ModalDelete from './ModalDelete'
 import { Context } from '..'
@@ -22,6 +25,8 @@ import UsersStore from '../store/users/UsersStore'
 import { stringAvatar, trimFullName } from '../utils/stringAvatar'
 import EditUserForm from './EditUserForm'
 import AddRoleForm from './AddRoleForm'
+import { Rate } from '../interfaces/UsersInterfaces'
+import AddRateForm from './AddRateForm'
 
 interface IProfileBlockProps {
 	id: number
@@ -30,6 +35,7 @@ interface IProfileBlockProps {
 	email: string
 	phone: string
 	telegramUsername: string
+	rate?: Rate[]
 }
 
 const ProfileBlock: React.FC<IProfileBlockProps> = ({
@@ -39,13 +45,16 @@ const ProfileBlock: React.FC<IProfileBlockProps> = ({
 	email,
 	phone,
 	telegramUsername,
+	rate,
 }) => {
 	const { store } = React.useContext(Context)
 	const location = useLocation()
 	const isProfile = location.pathname === '/profile' ? true : false
+	const adminAccess = store.roles.includes('ADMIN')
 	const navigate = useNavigate()
 
 	const [openEdit, setOpenEdit] = React.useState(false)
+	const [openRate, setOpenRate] = React.useState(false)
 	const [openDelete, setOpenDelete] = React.useState(false)
 	const [deleteResult, setDeleteResult] = React.useState(false)
 
@@ -142,8 +151,62 @@ const ProfileBlock: React.FC<IProfileBlockProps> = ({
 							<TelegramIcon color='primary' />
 							<Typography color='text.secondary'>{telegramUsername}</Typography>
 						</Box>
+						{role === 'разработчик' && (
+							<>
+								<Box
+									sx={{
+										display: 'flex',
+										alignItems: 'center',
+										gap: 1,
+									}}
+								>
+									<Typography variant='h6' component='h6'>
+										Ставка в час
+									</Typography>
+
+									{adminAccess && (
+										<IconButton
+											onClick={() => setOpenRate(true)}
+											color='warning'
+										>
+											<EditIcon
+												sx={{
+													width: '20px',
+													height: '20px',
+												}}
+											/>
+										</IconButton>
+									)}
+								</Box>
+
+								{rate && (
+									<Stack>
+										{rate.map((r) => (
+											<Box
+												sx={{ display: 'flex', gap: 2, alignItems: 'center' }}
+											>
+												<Box sx={{ display: 'flex', alignItems: 'center' }}>
+													<Typography
+														color='primary'
+														fontSize='20px'
+														fontWeight='bold'
+													>
+														{r.value}{' '}
+													</Typography>
+													<CurrencyRubleIcon color='primary' />
+												</Box>
+
+												<Typography color='text.secondary'>
+													{`действ. с ${r.date.split('-').reverse().join('.')}`}
+												</Typography>
+											</Box>
+										))}
+									</Stack>
+								)}
+							</>
+						)}
 					</CardContent>
-					{(store.roles.includes('ADMIN') || isProfile) && (
+					{(adminAccess || isProfile) && (
 						<CardActions sx={{ display: 'flex', gap: '10px' }}>
 							<Button onClick={() => setOpenEdit(true)} size='small'>
 								{isProfile ? 'Редактировать' : 'Выдать роль'}
@@ -164,6 +227,11 @@ const ProfileBlock: React.FC<IProfileBlockProps> = ({
 				open={openEdit}
 				handleClose={() => setOpenEdit(false)}
 				Component={isProfile ? <EditUserForm /> : <AddRoleForm userId={id} />}
+			/>
+			<Modal
+				open={openRate}
+				handleClose={() => setOpenRate(false)}
+				Component={<AddRateForm userId={id} />}
 			/>
 			<ModalDelete
 				open={openDelete}

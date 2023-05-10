@@ -26,9 +26,9 @@ import {
 	useFormState,
 } from 'react-hook-form'
 import {
+	fullNameValidation,
 	passwordValidation,
 	phoneValidation,
-	requiredValidation,
 	telegramUsernameValidation,
 } from '../../../utils/validationRules'
 
@@ -47,7 +47,7 @@ const RegistrationForm: React.FC = () => {
 
 	const [showPassword, setShowPassword] = React.useState<Boolean>(false)
 
-	const { control, handleSubmit } = useForm<IRegistrationForm>({mode: 'all'})
+	const { control, handleSubmit } = useForm<IRegistrationForm>({ mode: 'all' })
 
 	const { errors } = useFormState({
 		control,
@@ -99,7 +99,7 @@ const RegistrationForm: React.FC = () => {
 					<Controller
 						control={control}
 						name='fullName'
-						rules={requiredValidation}
+						rules={fullNameValidation}
 						render={({ field }) => (
 							<TextField
 								value={field.value}

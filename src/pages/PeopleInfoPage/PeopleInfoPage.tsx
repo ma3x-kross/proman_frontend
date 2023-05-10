@@ -38,6 +38,7 @@ const PeopleInfoPage = () => {
 					role={user.role}
 					phone={user.phone}
 					telegramUsername={user.telegramUsername}
+					rate={user.developerRates}
 				/>
 			)}
 			<MyProjects projects={userProjects} />

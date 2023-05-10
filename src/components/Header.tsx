@@ -72,13 +72,13 @@ function Header() {
 		setAnchorElNav(null)
 	}
 
-	const handleCloseUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+	const handleCloseUserMenu = async (event: React.MouseEvent<HTMLElement>) => {
 		const target = event.target as HTMLElement
 		if (target !== null) {
 			const text = target.innerText
 			if (text === settings[0]) navigate('/profile')
 			if (text === settings[1]) {
-				store.logout()
+				await store.logout()
 				navigate('/')
 			}
 		}

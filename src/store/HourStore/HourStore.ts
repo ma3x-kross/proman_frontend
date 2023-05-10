@@ -1,7 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 import {
 	AddHourDto,
-	DeveloperHours,
 	ProjectHours,
 } from '../../interfaces/HoursInterface'
 import HoursService from '../../services/HoursService'

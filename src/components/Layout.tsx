@@ -12,9 +12,9 @@ function Layout() {
 				<Outlet />
 			</Container>
 
-			<Divider sx={{ mt: '30px' }} />
+			{/* <Divider sx={{ mt: '30px' }} /> */}
 
-			<Footer />
+			{/* <Footer /> */}
 		</>
 	)
 }

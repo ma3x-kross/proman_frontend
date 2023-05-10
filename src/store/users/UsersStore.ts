@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 import UserService from '../../services/UserService'
-import { UpdateUserDto, User } from '../../interfaces/UsersInterfaces'
+import { Rate, UpdateUserDto, User } from '../../interfaces/UsersInterfaces'
 import { Project } from '../../interfaces/ProjectsInterfaces'
 
 export interface IUsers {
@@ -10,6 +10,7 @@ export interface IUsers {
 	role: string
 	phone: string
 	telegramUsername: string
+	developerRates?: Rate[]
 }
 
 class UsersStore {
@@ -55,6 +56,7 @@ class UsersStore {
 
 			phone: user.profile?.phone,
 			telegramUsername: user.profile?.telegramUsername,
+			developerRates: user.developerRates
 		}
 		this.user.role === 'разработчик'
 			? (this.userProjects = user.developersProjects)
@@ -128,6 +130,15 @@ class UsersStore {
 		} catch (e) {
 			console.log(e)
 			return false
+		}
+	}
+
+	async addRate(developerId: number, value: number, date: string) {
+		try {
+			await UserService.addRate(developerId, value, date)
+		} catch (e:any) {
+			console.log(e.response?.data?.message)
+			return e.response?.data?.message
 		}
 	}
 }

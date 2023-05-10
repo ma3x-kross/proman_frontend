@@ -1,9 +1,7 @@
-
 import {
 	Alert,
 	AlertColor,
 	AlertTitle,
-	
 	Button,
 	FormControl,
 	FormHelperText,
@@ -291,11 +289,15 @@ const CreateProjectForm: React.FC = () => {
 										onChange={(e) => field.onChange(e)}
 										error={!!errors.managerId?.message}
 									>
-										{managers.map((manager) => (
-											<MenuItem key={manager.email} value={manager.id}>
-												{manager.fullName}
-											</MenuItem>
-										))}
+										{managers.map((manager) =>
+											manager.fullName ? (
+												<MenuItem key={manager.email} value={manager.id}>
+													{manager.fullName}
+												</MenuItem>
+											) : (
+												''
+											),
+										)}
 									</Select>
 									{!!errors.managerId?.message && (
 										<FormHelperText error>
@@ -342,11 +344,15 @@ const CreateProjectForm: React.FC = () => {
 									>
 										{developers
 											.sort((a, b) => a.id - b.id)
-											.map((developer) => (
-												<MenuItem key={developer.email} value={developer.id}>
-													{`${developer.id} ${developer.fullName}`}
-												</MenuItem>
-											))}
+											.map((developer) =>
+												developer.fullName ? (
+													<MenuItem key={developer.email} value={developer.id}>
+														{`${developer.id} ${developer.fullName}`}
+													</MenuItem>
+												) : (
+													''
+												),
+											)}
 									</Select>
 									{!!errors.developersIds?.message && (
 										<FormHelperText error>

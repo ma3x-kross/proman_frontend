@@ -51,4 +51,8 @@ export default class UserService {
 	static async addRole(value: string, userId: number) {
 		$api.post('users/add-role', { value, userId })
 	}
+
+	static async addRate( developerId: number, value: number, date: string) {
+		$api.post('payroll/rate', { value, developerId, date })
+	}
 }

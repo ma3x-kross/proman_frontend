@@ -7,6 +7,12 @@ export interface User {
 	profile: Profile
 	projects: Project[]
 	developersProjects: Project[]
+	developerRates?: Rate[]
+}
+
+export interface Rate {
+	value: number
+	date: string
 }
 
 interface Roles {

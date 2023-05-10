@@ -1,6 +1,10 @@
 import { AxiosResponse } from 'axios'
 import $api from '../http'
-import { ProjectHours, Hour } from '../interfaces/HoursInterface'
+import {
+	ProjectHours,
+	Hour,
+	DeveloperHours,
+} from '../interfaces/HoursInterface'
 
 export default class HoursService {
 	static async addHours(
@@ -32,5 +36,14 @@ export default class HoursService {
 
 	static async deleteHour(id: number) {
 		$api.delete(`hours/${id}`)
+	}
+
+	static async getAllHours(
+		start?: string,
+		end?: string,
+	): Promise<AxiosResponse<DeveloperHours[]>> {
+		return $api.get<DeveloperHours[]>(
+			`hours/${start && end ? `?start=${start}&end=${end}` : ''}`,
+		)
 	}
 }
