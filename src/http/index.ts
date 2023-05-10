@@ -1,9 +1,8 @@
 import axios from 'axios'
-import { Simulate } from 'react-dom/test-utils'
-import error = Simulate.error
 import { AuthResponse } from '../models/response/AuthResponse'
 
-export const API_URL = 'http://localhost:5000/api'
+export const API_URL = process.env.REACT_APP_API_URL
+console.log(API_URL)
 
 const $api = axios.create({
 	withCredentials: true,

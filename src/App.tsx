@@ -40,16 +40,16 @@ function App() {
 		)
 	}
 
-	if (!store.isAuth) {
-		return (
-			<div>
-				<Routes>
-					<Route path='/' element=<LoginPage /> />
-					<Route path='/registration/:link' element=<RegistrationPage /> />
-				</Routes>
-			</div>
-		)
-	}
+	// if (!store.isAuth) {
+	// 	return (
+	// 		<div>
+	// 			<Routes>
+	// 				<Route path='/' element=<LoginPage /> />
+	// 				<Route path='/registration/:link' element=<RegistrationPage /> />
+	// 			</Routes>
+	// 		</div>
+	// 	)
+	// }
 
 	return (
 		<div className='App'>
@@ -70,7 +70,7 @@ function App() {
 					<Route
 						path='people'
 						element={
-							allowAdminAndManager ? (
+							true ? (
 								<PeoplePage />
 							) : (
 								<Navigate to='/' replace />

@@ -116,7 +116,7 @@ const PeoplePage = () => {
 				<Typography variant='h4' component='h4' sx={{ mt: 3, mb: 3 }}>
 					Персонал
 				</Typography>
-				{localStorage.getItem('roles')?.includes('ADMIN') && (
+				{/*localStorage.getItem('roles')?.includes('ADMIN')*/ true && (
 					<Stack direction='row' spacing={2} alignItems='center'>
 						
 						<Button color='primary' onClick={handleClickInviteNewUser} sx={{mt: 2}}>
