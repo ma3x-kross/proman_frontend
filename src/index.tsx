@@ -4,8 +4,8 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import Store from './store/store'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
-import { Container, CssBaseline } from '@mui/material'
-import { dark } from '@mui/material/styles/createPalette'
+import {  CssBaseline } from '@mui/material'
+
 import { ruRU } from '@mui/material/locale'
 
 const theme = createTheme(

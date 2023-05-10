@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Button, Fab, Stack, Typography } from '@mui/material'
+import { Box, Button, Stack, Typography } from '@mui/material'
 import {
 	DataGrid,
 	GridColDef,
@@ -10,8 +10,6 @@ import { grey } from '@mui/material/colors'
 
 import UsersStore from '../../store/users/UsersStore'
 import { observer } from 'mobx-react-lite'
-
-import AddIcon from '@mui/icons-material/Add'
 import Modal from '../../components/Modal'
 import InviteForm from './InviteForm'
 import PeopleActions from './PeopleActions'

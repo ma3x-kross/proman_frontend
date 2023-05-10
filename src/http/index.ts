@@ -1,6 +1,5 @@
 import axios from 'axios'
-import { Simulate } from 'react-dom/test-utils'
-import error = Simulate.error
+
 import { AuthResponse } from '../models/response/AuthResponse'
 
 export const API_URL = process.env.REACT_APP_API_URL
