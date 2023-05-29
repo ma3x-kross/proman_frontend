@@ -141,7 +141,7 @@ const CreateProjectForm: React.FC = () => {
 								type='text'
 								fullWidth
 								label='Введите название проекта'
-								placeholder='example@mail.ru'
+								placeholder='Web-приложение'
 								variant='outlined'
 								error={!!errors.name?.message}
 								helperText={errors.name?.message}
