@@ -28,11 +28,9 @@ interface IGenInfo {
 const ProjectGeneralInfo: React.FC<IProjectGeneralInfoProps> = ({
 	project,
 }) => {
-
-const access =
-	localStorage.getItem('roles')?.includes('ADMIN') ||
-	localStorage.getItem('roles')?.includes('MANAGER')
-
+	const access =
+		localStorage.getItem('roles')?.includes('ADMIN') ||
+		localStorage.getItem('roles')?.includes('MANAGER')
 
 	const navigate = useNavigate()
 
@@ -53,19 +51,30 @@ const access =
 	const [generalInfo, setGeneralInfo] = React.useState<IGenInfo[]>([])
 
 	React.useMemo(() => {
-		const genInfo = [
-			{
-				name: 'Срок окончания',
-				value: project.deadline
-					? project.deadline.split('-').reverse().join('.')
-					: '',
-			},
-			{ name: 'Ставка проекта', value: project.rate },
-			{ name: 'Оценка(часы)', value: project.plannedHours },
-			{ name: 'Потраченные часы', value: project.workedHours },
-			{ name: 'Стоимость', value: project.cost },
-			{ name: 'Прибыль', value: project.profit },
-		]
+		const genInfo = access
+			? [
+					{
+						name: 'Срок окончания',
+						value: project.deadline
+							? project.deadline.split('-').reverse().join('.')
+							: '',
+					},
+					{ name: 'Ставка проекта', value: project.rate },
+					{ name: 'Оценка(часы)', value: project.plannedHours },
+					{ name: 'Потраченные часы', value: project.workedHours },
+					{ name: 'Стоимость', value: project.cost },
+					{ name: 'Прибыль', value: project.profit },
+			  ]
+			: [
+					{
+						name: 'Срок окончания',
+						value: project.deadline
+							? project.deadline.split('-').reverse().join('.')
+							: '',
+					},
+					{ name: 'Оценка(часы)', value: project.plannedHours },
+					{ name: 'Потраченные часы', value: project.workedHours },
+			  ]
 		setGeneralInfo(genInfo)
 	}, [project])
 
@@ -89,15 +98,15 @@ const access =
 					Общая информация
 				</Typography>
 				{access && (
-						<Box>
-							<IconButton size='small' onClick={() => setOpenEdit(true)}>
-								<EditIcon color='warning' />
-							</IconButton>
-							<IconButton size='small' onClick={() => setOpenDelete(true)}>
-								<DeleteIcon color='error' />
-							</IconButton>
-						</Box>
-					)}
+					<Box>
+						<IconButton size='small' onClick={() => setOpenEdit(true)}>
+							<EditIcon color='warning' />
+						</IconButton>
+						<IconButton size='small' onClick={() => setOpenDelete(true)}>
+							<DeleteIcon color='error' />
+						</IconButton>
+					</Box>
+				)}
 			</Box>
 
 			<Divider sx={{ mt: '5px', mb: '10px' }} />
