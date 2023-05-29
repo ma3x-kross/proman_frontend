@@ -19,7 +19,6 @@ import {
 	useFormState,
 } from 'react-hook-form'
 import {
-	numberValidation,
 	requiredNumberValidation,
 	requiredValidation,
 } from '../utils/validationRules'

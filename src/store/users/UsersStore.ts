@@ -56,7 +56,7 @@ class UsersStore {
 
 			phone: user.profile?.phone,
 			telegramUsername: user.profile?.telegramUsername,
-			developerRates: user.developerRates
+			developerRates: user.developerRates,
 		}
 		this.user.role === 'разработчик'
 			? (this.userProjects = user.developersProjects)
@@ -135,8 +135,10 @@ class UsersStore {
 
 	async addRate(developerId: number, value: number, date: string) {
 		try {
-			await UserService.addRate(developerId, value, date)
-		} catch (e:any) {
+			const response = await UserService.addRate(developerId, value, date)
+			this.setUser(response.data)
+			console.log(response)
+		} catch (e: any) {
 			console.log(e.response?.data?.message)
 			return e.response?.data?.message
 		}

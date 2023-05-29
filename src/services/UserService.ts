@@ -53,6 +53,6 @@ export default class UserService {
 	}
 
 	static async addRate( developerId: number, value: number, date: string) {
-		$api.post('payroll/rate', { value, developerId, date })
+		return $api.post('payroll/rate', { value, developerId, date })
 	}
 }

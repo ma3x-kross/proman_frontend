@@ -182,7 +182,7 @@ const ProfileBlock: React.FC<IProfileBlockProps> = ({
 								{rate && (
 									<Stack>
 										{rate.map((r) => (
-											<Box
+											<Box key={r.date}
 												sx={{ display: 'flex', gap: 2, alignItems: 'center' }}
 											>
 												<Box sx={{ display: 'flex', alignItems: 'center' }}>
