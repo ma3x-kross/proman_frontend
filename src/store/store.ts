@@ -82,9 +82,9 @@ export default class Store {
 	}
 
 	// Users
-	async invite(email: string, role: string) {
+	async invite(email: string, role: string, rate: number) {
 		try {
-			const response = await UserService.invite(email, role)
+			const response = await UserService.invite(email, role, rate)
 			console.log(response)
 			return true
 		} catch (e: any) {

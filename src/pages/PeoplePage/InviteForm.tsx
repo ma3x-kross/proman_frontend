@@ -27,12 +27,14 @@ import {
 } from 'react-hook-form'
 import {
 	emailValidation,
+	rateValidation,
 	requiredValidation,
 } from '../../utils/validationRules'
 
 interface IInviteForm {
 	email: string
 	role: string
+	rate: string
 }
 
 interface IAlertValue {
@@ -43,7 +45,7 @@ interface IAlertValue {
 const InviteForm = () => {
 	const { store } = React.useContext(Context)
 
-	const { control, handleSubmit } = useForm<IInviteForm>({ mode: 'all' })
+	const { control, handleSubmit, watch } = useForm<IInviteForm>({ mode: 'all' })
 	const { errors } = useFormState({
 		control,
 	})
@@ -65,7 +67,11 @@ const InviteForm = () => {
 	}
 
 	const onSubmit: SubmitHandler<IInviteForm> = async (data) => {
-		const result = await store.invite(data.email, data.role)
+		const result = await store.invite(
+			data.email,
+			data.role,
+			parseInt(data.rate),
+		)
 		if (!result) {
 			setAlertValue({
 				type: 'error',
@@ -105,7 +111,8 @@ const InviteForm = () => {
 						name='email'
 						rules={emailValidation}
 						render={({ field }) => (
-							<TextField size='small'
+							<TextField
+								size='small'
 								value={field.value}
 								onChange={(e) => field.onChange(e)}
 								type='email'
@@ -156,6 +163,30 @@ const InviteForm = () => {
 						)}
 					/>
 				</Grid>
+
+				{watch('role') === 'DEVELOPER' && (
+					<Grid item>
+						<Controller
+							control={control}
+							name='rate'
+							rules={rateValidation}
+							render={({ field }) => (
+								<TextField
+									size='small'
+									value={field.value}
+									onChange={(e) => field.onChange(e)}
+									type='number'
+									fullWidth
+									label='Введите ставку'
+									placeholder='250'
+									variant='outlined'
+									error={!!errors.rate?.message}
+									helperText={errors.rate?.message}
+								/>
+							)}
+						/>
+					</Grid>
+				)}
 
 				<Grid item>
 					<Button size='small' type='submit' fullWidth variant='contained'>

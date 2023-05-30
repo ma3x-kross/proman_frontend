@@ -6,12 +6,14 @@ import { UpdateUserDto, User } from '../interfaces/UsersInterfaces'
 export default class UserService {
 	static async invite(
 		email: string,
-
 		role: string,
+		rate: number,
 	): Promise<AxiosResponse<AuthResponse>> {
+		console.log(rate, typeof rate)
 		return $api.post<AuthResponse>('/users/invite', {
 			email,
 			role,
+			rate,
 		})
 	}
 
@@ -52,7 +54,7 @@ export default class UserService {
 		$api.post('users/add-role', { value, userId })
 	}
 
-	static async addRate( developerId: number, value: number, date: string) {
+	static async addRate(developerId: number, value: number, date: string) {
 		return $api.post('payroll/rate', { value, developerId, date })
 	}
 }

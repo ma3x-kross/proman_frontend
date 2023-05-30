@@ -64,6 +64,13 @@ export const numberValidation = {
 	},
 }
 
+export const rateValidation = {
+	required: REQUIRED_FIELD,
+	validate: (value: string) => {
+		if (parseInt(value) < 0) return 'Только положительные значения'
+	},
+}
+
 export const telegramUsernameValidation = {
 	required: REQUIRED_FIELD,
 	validate: (value: string) => {
