@@ -15,6 +15,7 @@ const PeopleInfoPage = () => {
 		if (id) {
 			const fetchUser = async () => {
 				await UsersStore.getOneUser(parseInt(id))
+				console.log(user)
 			}
 			fetchUser()
 		}
@@ -41,7 +42,7 @@ const PeopleInfoPage = () => {
 					rate={user.developerRates}
 				/>
 			)}
-			<MyProjects projects={userProjects} />
+			{user.role !== 'администратор' && <MyProjects projects={userProjects} />}
 		</Container>
 	)
 }

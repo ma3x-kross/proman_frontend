@@ -45,7 +45,7 @@ const ProfilePage: React.FC = () => {
 					telegramUsername={user.telegramUsername}
 				/>
 			)}
-			<MyProjects projects={userProjects} />
+			{user.role !== 'администратор' && <MyProjects projects={userProjects} />}
 		</Container>
 	)
 }
