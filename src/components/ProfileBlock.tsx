@@ -151,7 +151,7 @@ const ProfileBlock: React.FC<IProfileBlockProps> = ({
 							<TelegramIcon color='primary' />
 							<Typography color='text.secondary'>{telegramUsername}</Typography>
 						</Box>
-						{role === 'разработчик' && (
+						{role === 'разработчик' && (adminAccess || isProfile) && (
 							<>
 								<Box
 									sx={{
@@ -182,7 +182,8 @@ const ProfileBlock: React.FC<IProfileBlockProps> = ({
 								{rate && (
 									<Stack>
 										{rate.map((r) => (
-											<Box key={r.date}
+											<Box
+												key={r.date}
 												sx={{ display: 'flex', gap: 2, alignItems: 'center' }}
 											>
 												<Box sx={{ display: 'flex', alignItems: 'center' }}>
