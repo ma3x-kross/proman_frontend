@@ -50,7 +50,7 @@ export interface CreateProjectDto {
 
 	rate: number
 
-	managerId: number
+	managerId: string
 
 	developersIds: number[]
 }

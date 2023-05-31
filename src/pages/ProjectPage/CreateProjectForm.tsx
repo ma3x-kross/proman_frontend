@@ -38,7 +38,6 @@ import {
 } from '../../interfaces/ProjectsInterfaces'
 import { ruRU } from '@mui/x-date-pickers/locales'
 import dayjs from 'dayjs'
-import { User } from '../../interfaces/UsersInterfaces'
 import UsersStore from '../../store/users/UsersStore'
 import ProjectStore from '../../store/projects/ProjectStore'
 
@@ -286,6 +285,7 @@ const CreateProjectForm: React.FC = () => {
 										id='manager-select-label'
 										value={field.value}
 										label='Менеджер'
+										defaultValue={''}
 										onChange={(e) => field.onChange(e)}
 										error={!!errors.managerId?.message}
 									>
