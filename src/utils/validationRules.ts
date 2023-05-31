@@ -45,7 +45,7 @@ export const phoneValidation = {
 export const requiredNumberValidation = {
 	required: REQUIRED_FIELD,
 	validate: (value: number) => {
-		if (value.toString().match(/^\d+$/)) {
+		if (value > 0) {
 			return true
 		}
 		return 'Только положительные значения'

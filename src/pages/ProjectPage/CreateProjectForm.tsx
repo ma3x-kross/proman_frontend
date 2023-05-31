@@ -30,6 +30,7 @@ import {
 } from 'react-hook-form'
 import {
 	numberValidation,
+	requiredNumberValidation,
 	requiredValidation,
 } from '../../utils/validationRules'
 import {
@@ -224,7 +225,7 @@ const CreateProjectForm: React.FC = () => {
 					<Controller
 						control={control}
 						name='plannedHours'
-						rules={numberValidation}
+						rules={requiredNumberValidation}
 						render={({ field }) => (
 							<TextField
 								size='small'
